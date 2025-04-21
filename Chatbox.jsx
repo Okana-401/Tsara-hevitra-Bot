@@ -87,3 +87,4 @@ useEffect(() => {
   const saved = localStorage.getItem("tsara_hevitra_history")
   if (saved) setResponses(JSON.parse(saved))
 }, [])
+const [isTyping, setIsTyping] = useState(false)
