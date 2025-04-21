@@ -83,3 +83,7 @@ const handleMic = () => {
     Alefa
   </button>
 </div>
+useEffect(() => {
+  const saved = localStorage.getItem("tsara_hevitra_history")
+  if (saved) setResponses(JSON.parse(saved))
+}, [])
