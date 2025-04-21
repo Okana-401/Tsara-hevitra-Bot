@@ -45,3 +45,41 @@ const ChatBox = () => {
 }
 
 export default ChatBox
+const [listening, setListening] = useState(false)
+
+const handleMic = () => {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+  if (!SpeechRecognition) {
+    alert("Tsy tohanan'ny navigateur ny mic")
+    return
+  }
+
+  const recognition = new SpeechRecognition()
+  recognition.lang = "mg-MG" // Malagasy, na fr-FR raha tianao
+  recognition.start()
+  setListening(true)
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript
+    setMessage(transcript)
+    setListening(false)
+  }
+
+  recognition.onerror = () => setListening(false)
+}
+<div className="flex gap-2">
+  <input
+    type="text"
+    className="flex-1 p-2 rounded bg-gray-800 text-white border border-gray-600"
+    placeholder="Soraty eto..."
+    value={message}
+    onChange={(e) => setMessage(e.target.value)}
+    onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+  />
+  <button onClick={handleMic} className="bg-gray-700 px-3 rounded text-white">
+    🎤
+  </button>
+  <button onClick={sendMessage} className="bg-orange-500 px-4 rounded text-white">
+    Alefa
+  </button>
+</div>
